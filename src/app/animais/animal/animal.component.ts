@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+const api = 'http://localhost:3000';
 
 @Component({
   selector: 'app-animal',
@@ -7,6 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnimalComponent implements OnInit {
 
+  private urlOriginal = '';
+
+  @Input() descricao = '';
+
+  @Input() set url(url: string) {
+    if(url.startsWith('data')) {
+      this.urlOriginal = url;
+    }else{
+      //confirmar se é API ou api
+      this.urlOriginal = `${api}/imgs/${url}`;
+    }
+  }
+
+  get url():string {
+    return this.urlOriginal;
+  }
   constructor() { }
 
   ngOnInit(): void {
